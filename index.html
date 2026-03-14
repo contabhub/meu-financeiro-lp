@@ -47,6 +47,17 @@
         html.light .wamsg-received { background: #ffffff; color: #1e293b; }
         html.light .faq-item { background: rgba(255,255,255,0.8); border-color: rgba(37,99,235,0.12); }
         html.light input, html.light textarea { background: rgba(255,255,255,0.9) !important; color: #1e293b !important; border-color: rgba(37,99,235,0.2) !important; }
+        html.light .hero-bg { background: radial-gradient(ellipse at 30% 50%, rgba(37,99,235,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(59,130,246,0.06) 0%, transparent 50%), linear-gradient(180deg, #f0f4ff 0%, #f8fafc 50%, #f0f4ff 100%); }
+        html.light .bg-navy { background-color: #ffffff; }
+        html.light .bg-deep\/50 { background-color: rgba(255,255,255,0.5); }
+        html.light .group:hover .group-hover\:bg-deep { background-color: #f1f5f9; }
+        html.light .ring-accent\/20 { --tw-ring-color: rgba(37,99,235,0.15); }
+        html.light .wa-header { background: #075e54 !important; }
+        html.light .wa-chat { background: #e5ddd5 !important; }
+        html.light .wa-modal { background: linear-gradient(135deg, rgba(255,255,255,0.97), rgba(248,250,252,0.98)); border-color: rgba(37,99,235,0.15); }
+        html.light .wa-modal-input { background: rgba(241,245,249,0.8) !important; color: #1e293b !important; border-color: rgba(37,99,235,0.15) !important; }
+        html.light .wa-modal-close { color: #64748b; }
+        html.light .wa-modal-close:hover { color: #0f172a; }
 
         /* Ambient Background Glow */
         .ambient-glow { position: fixed; top: -20%; left: -10%; width: 50vw; height: 50vh; background: radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 70%); border-radius: 50%; pointer-events: none; z-index: 0; filter: blur(60px); animation: float 10s ease-in-out infinite alternate; }
@@ -334,6 +345,20 @@
 
         .step-number { font-family: 'JetBrains Mono', monospace; font-size: 4rem; font-weight: 700; color: rgba(37,99,235,0.08); line-height: 1; }
 
+        /* WhatsApp Modal */
+        .wa-modal-overlay { position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+        .wa-modal-overlay.open { display: flex; opacity: 1; }
+        .wa-modal { background: linear-gradient(135deg, rgba(15,31,58,0.95), rgba(8,18,38,0.98)); border: 1px solid rgba(37,99,235,0.2); border-radius: 1.5rem; padding: 2.5rem; max-width: 420px; width: 90%; transform: translateY(20px) scale(0.95); transition: transform 0.3s ease; box-shadow: 0 25px 80px -15px rgba(0,0,0,0.6), 0 0 40px rgba(37,99,235,0.1); }
+        .wa-modal-overlay.open .wa-modal { transform: translateY(0) scale(1); }
+        .wa-modal-input { width: 100%; padding: 0.75rem 1rem; border-radius: 0.5rem; background: rgba(15,31,58,0.6); border: 1px solid rgba(37,99,235,0.15); color: #fff; font-size: 0.875rem; outline: none; transition: border-color 0.3s; }
+        .wa-modal-input:focus { border-color: rgba(37,99,235,0.5); }
+        .wa-modal-input::placeholder { color: rgba(148,163,184,0.6); }
+        .wa-modal-btn { width: 100%; padding: 0.875rem; border-radius: 9999px; background: var(--whatsapp); color: #fff; font-weight: 600; font-size: 0.875rem; cursor: pointer; border: none; transition: opacity 0.3s, transform 0.3s; letter-spacing: 0.05em; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .wa-modal-btn:hover { opacity: 0.9; transform: scale(1.02); }
+        .wa-modal-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .wa-modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.25rem; transition: color 0.2s; }
+        .wa-modal-close:hover { color: #fff; }
+
         /* Mobile nav */
         .mobile-menu { display: none; }
         .mobile-menu.open { display: flex; }
@@ -346,9 +371,37 @@
     <div class="ambient-glow-2"></div>
 
     <!-- WhatsApp FAB -->
-    <a href="https://wa.me/5500000000000" target="_blank" rel="noopener" class="whatsapp-fab" aria-label="Fale conosco no WhatsApp">
+    <button type="button" onclick="document.getElementById('waModal').classList.add('open')" class="whatsapp-fab" aria-label="Fale conosco no WhatsApp">
         <iconify-icon icon="mdi:whatsapp" style="font-size:32px;color:#fff;"></iconify-icon>
-    </a>
+    </button>
+
+    <!-- WhatsApp Lead Modal -->
+    <div id="waModal" class="wa-modal-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+        <div class="wa-modal" style="position:relative;">
+            <button type="button" class="wa-modal-close" onclick="document.getElementById('waModal').classList.remove('open')">&times;</button>
+            <div style="text-align:center;margin-bottom:1.5rem;">
+                <div style="width:48px;height:48px;border-radius:50%;background:var(--whatsapp);display:inline-flex;align-items:center;justify-content:center;margin-bottom:0.75rem;">
+                    <iconify-icon icon="mdi:whatsapp" style="font-size:24px;color:#fff;"></iconify-icon>
+                </div>
+                <h3 style="color:#fff;font-size:1.25rem;font-weight:700;margin:0;">Fale com a gente</h3>
+                <p style="color:var(--muted);font-size:0.8rem;margin-top:0.25rem;">Preencha e nosso time entrará em contato</p>
+            </div>
+            <form id="waLeadForm" style="display:flex;flex-direction:column;gap:0.75rem;">
+                <input type="text" name="nome" placeholder="Seu nome" required class="wa-modal-input" />
+                <input type="tel" name="telefone" placeholder="Telefone com DDD" required class="wa-modal-input" />
+                <textarea name="mensagem" rows="3" class="wa-modal-input" style="resize:none;" placeholder="Sua mensagem">Quero conhecer mais sobre o Meu Financeiro</textarea>
+                <button type="submit" class="wa-modal-btn" id="waSubmitBtn">
+                    <iconify-icon icon="mdi:whatsapp" style="font-size:18px;"></iconify-icon>
+                    Enviar mensagem
+                </button>
+            </form>
+            <div id="waFormSuccess" style="display:none;text-align:center;padding:1.5rem 0;">
+                <iconify-icon icon="solar:check-circle-bold-duotone" style="font-size:3rem;color:var(--whatsapp);display:block;margin:0 auto 0.75rem;"></iconify-icon>
+                <p style="color:#fff;font-weight:600;font-size:1rem;">Mensagem enviada!</p>
+                <p style="color:var(--muted);font-size:0.8rem;margin-top:0.25rem;">Nosso agente entrará em contato pelo WhatsApp em breve.</p>
+            </div>
+        </div>
+    </div>
 
     <!-- Layout Wrapper -->
     <div class="max-w-[1400px] mx-auto relative z-10 bg-deep\/50 backdrop-blur-sm shadow-2xl layout-wrapper">
@@ -358,7 +411,7 @@
             <div class="flex justify-between items-center px-6 md:px-12 py-4">
                 <div class="flex items-center gap-8">
                     <a class="text-xs font-mono tracking-widest uppercase hover\:text-accent transition-colors text-muted hidden md:block" href="#como-funciona">Como Funciona</a>
-                    <a class="text-xs font-mono tracking-widest uppercase hover\:text-accent transition-colors text-muted hidden md:block" href="#beneficios">Beneficios</a>
+                    <a class="text-xs font-mono tracking-widest uppercase hover\:text-accent transition-colors text-muted hidden md:block" href="#beneficios">Benefícios</a>
                 </div>
                 <a href="#hero" class="absolute" style="left:50%;transform:translateX(-50%);" >
                     <div class="flex items-center gap-3 cursor-pointer">
@@ -384,7 +437,7 @@
             <!-- Mobile Menu -->
             <div id="mobileMenu" class="mobile-menu flex-col gap-4 px-6 pb-6 md:hidden">
                 <a class="text-sm text-muted hover\:text-accent transition-colors" href="#como-funciona">Como Funciona</a>
-                <a class="text-sm text-muted hover\:text-accent transition-colors" href="#beneficios">Beneficios</a>
+                <a class="text-sm text-muted hover\:text-accent transition-colors" href="#beneficios">Benefícios</a>
                 <a class="text-sm text-muted hover\:text-accent transition-colors" href="#parceiro">Parceiro</a>
                 <a class="text-sm text-muted hover\:text-accent transition-colors" href="#faq">FAQ</a>
             </div>
@@ -408,7 +461,7 @@
                     </h1>
 
                     <p class="mt-8 text-muted text-lg md:text-xl max-w-2xl font-light reveal delay-400 leading-relaxed">
-                        Envie um <strong class="text-white">audio</strong>, uma <strong class="text-white">foto</strong> ou um <strong class="text-white">texto</strong> no WhatsApp. A IA categoriza tudo automaticamente. Sem app. Sem planilha. Sem complicacao.
+                        Envie um <strong class="text-white">áudio</strong>, uma <strong class="text-white">foto</strong> ou um <strong class="text-white">texto</strong> no WhatsApp. A IA categoriza tudo automaticamente. Sem app. Sem planilha. Sem complicação.
                     </p>
 
                     <div class="mt-12 flex flex-wrap items-center gap-6 reveal delay-500">
@@ -465,8 +518,8 @@
                                 <div class="wamsg-ai-badge"><iconify-icon icon="solar:magic-stick-3-bold" style="font-size:10px;"></iconify-icon> IA Meu Financeiro</div>
                                 <div>Entendi! Registrei:</div>
                                 <div style="margin-top:6px;padding:8px;background:rgba(37,99,235,0.1);border-radius:6px;font-size:0.75rem;">
-                                    <div style="display:flex;justify-content:space-between;"><span>Almoco restaurante</span><span style="color:#ef4444;font-weight:600;">-R$ 45,00</span></div>
-                                    <div style="margin-top:4px;color:var(--primary);font-size:0.65rem;">Categoria: Alimentacao</div>
+                                    <div style="display:flex;justify-content:space-between;"><span>Almoço restaurante</span><span style="color:#ef4444;font-weight:600;">-R$ 45,00</span></div>
+                                    <div style="margin-top:4px;color:var(--primary);font-size:0.65rem;">Categoria: Alimentação</div>
                                 </div>
                                 <div class="wamsg-time">10:32</div>
                             </div>
@@ -482,7 +535,7 @@
                                     <div style="display:flex;justify-content:space-between;"><span>Conta de luz</span><span style="color:#ef4444;font-weight:600;">-R$ 120,00</span></div>
                                     <div style="margin-top:4px;color:var(--primary);font-size:0.65rem;">Categoria: Moradia</div>
                                 </div>
-                                <div style="margin-top:4px;font-size:0.75rem;">Dashboard atualizado! Voce ja gastou <strong>R$ 1.240</strong> esse mes.</div>
+                                <div style="margin-top:4px;font-size:0.75rem;">Dashboard atualizado! Você já gastou <strong>R$ 1.240</strong> esse mês.</div>
                                 <div class="wamsg-time">10:45</div>
                             </div>
                         </div>
@@ -498,16 +551,16 @@
             <div class="marquee-container opacity-50 hover\:opacity-100 transition-opacity duration-500">
                 <div class="marquee-content">
                     <span class="text-xs font-mono uppercase tracking-widest text-muted mx-8 flex items-center gap-2"><iconify-icon class="text-accent" icon="solar:users-group-rounded-bold-duotone"></iconify-icon> +500 contadores parceiros</span>
-                    <span class="text-xs font-mono uppercase tracking-widest text-muted mx-8 flex items-center gap-2"><iconify-icon class="text-accent" icon="solar:chart-2-bold-duotone"></iconify-icon> +10.000 transacoes/mes</span>
-                    <span class="text-xs font-mono uppercase tracking-widest text-muted mx-8 flex items-center gap-2"><iconify-icon class="text-accent" icon="solar:star-bold-duotone"></iconify-icon> 4.9 de satisfacao</span>
+                    <span class="text-xs font-mono uppercase tracking-widest text-muted mx-8 flex items-center gap-2"><iconify-icon class="text-accent" icon="solar:chart-2-bold-duotone"></iconify-icon> +10.000 transações/mês</span>
+                    <span class="text-xs font-mono uppercase tracking-widest text-muted mx-8 flex items-center gap-2"><iconify-icon class="text-accent" icon="solar:star-bold-duotone"></iconify-icon> 4.9 de satisfação</span>
                     <span class="text-xs font-mono uppercase tracking-widest text-muted mx-8 flex items-center gap-2"><iconify-icon class="text-accent" icon="solar:wallet-bold-duotone"></iconify-icon> R$ 2M+ gerenciados</span>
                     <span class="text-xs font-mono uppercase tracking-widest text-muted mx-8 flex items-center gap-2"><iconify-icon class="text-accent" icon="mdi:whatsapp"></iconify-icon> 100% via WhatsApp</span>
                     <span class="text-xs font-mono uppercase tracking-widest text-muted mx-8 flex items-center gap-2"><iconify-icon class="text-accent" icon="solar:shield-check-bold-duotone"></iconify-icon> Dados seguros</span>
                 </div>
                 <div class="marquee-content">
                     <span class="text-xs font-mono uppercase tracking-widest text-muted mx-8 flex items-center gap-2"><iconify-icon class="text-accent" icon="solar:users-group-rounded-bold-duotone"></iconify-icon> +500 contadores parceiros</span>
-                    <span class="text-xs font-mono uppercase tracking-widest text-muted mx-8 flex items-center gap-2"><iconify-icon class="text-accent" icon="solar:chart-2-bold-duotone"></iconify-icon> +10.000 transacoes/mes</span>
-                    <span class="text-xs font-mono uppercase tracking-widest text-muted mx-8 flex items-center gap-2"><iconify-icon class="text-accent" icon="solar:star-bold-duotone"></iconify-icon> 4.9 de satisfacao</span>
+                    <span class="text-xs font-mono uppercase tracking-widest text-muted mx-8 flex items-center gap-2"><iconify-icon class="text-accent" icon="solar:chart-2-bold-duotone"></iconify-icon> +10.000 transações/mês</span>
+                    <span class="text-xs font-mono uppercase tracking-widest text-muted mx-8 flex items-center gap-2"><iconify-icon class="text-accent" icon="solar:star-bold-duotone"></iconify-icon> 4.9 de satisfação</span>
                     <span class="text-xs font-mono uppercase tracking-widest text-muted mx-8 flex items-center gap-2"><iconify-icon class="text-accent" icon="solar:wallet-bold-duotone"></iconify-icon> R$ 2M+ gerenciados</span>
                     <span class="text-xs font-mono uppercase tracking-widest text-muted mx-8 flex items-center gap-2"><iconify-icon class="text-accent" icon="mdi:whatsapp"></iconify-icon> 100% via WhatsApp</span>
                     <span class="text-xs font-mono uppercase tracking-widest text-muted mx-8 flex items-center gap-2"><iconify-icon class="text-accent" icon="solar:shield-check-bold-duotone"></iconify-icon> Dados seguros</span>
@@ -523,14 +576,14 @@
                     <span class="text-reveal-wrapper"><span class="text-reveal-content">Seus clientes ainda</span></span><br/>
                     <span class="text-reveal-wrapper"><span class="text-reveal-content delay-100 text-transparent bg-clip-text bg-gradient-to-r from-accent to-accentBright">usam planilhas?</span></span>
                 </h2>
-                <p class="mt-6 text-muted text-lg max-w-2xl reveal delay-200 leading-relaxed">A maioria dos MEIs e pessoas fisicas nao controla suas financas. O resultado: dados incompletos, retrabalho para o contador e clientes insatisfeitos.</p>
+                <p class="mt-6 text-muted text-lg max-w-2xl reveal delay-200 leading-relaxed">A maioria dos MEIs e pessoas físicas não controla suas finanças. O resultado: dados incompletos, retrabalho para o contador e clientes insatisfeitos.</p>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
                     <div class="flashlight-card p-8 reveal delay-200" onmousemove="const r=this.getBoundingClientRect();this.style.setProperty('--mouse-x',`${event.clientX-r.left}px`);this.style.setProperty('--mouse-y',`${event.clientY-r.top}px`);">
                         <div class="relative z-10">
                             <iconify-icon icon="solar:danger-triangle-bold-duotone" style="font-size:2.5rem;color:#ef4444;margin-bottom:1rem;display:block;"></iconify-icon>
                             <h3 class="text-xl font-semibold text-white mb-2">Dados incompletos</h3>
-                            <p class="text-sm text-muted leading-relaxed">Clientes esquecem de anotar gastos. Voce recebe informacoes pela metade no final do mes.</p>
+                            <p class="text-sm text-muted leading-relaxed">Clientes esquecem de anotar gastos. Você recebe informações pela metade no final do mês.</p>
                         </div>
                     </div>
                     <div class="flashlight-card p-8 reveal delay-300" onmousemove="const r=this.getBoundingClientRect();this.style.setProperty('--mouse-x',`${event.clientX-r.left}px`);this.style.setProperty('--mouse-y',`${event.clientY-r.top}px`);">
@@ -544,7 +597,7 @@
                         <div class="relative z-10">
                             <iconify-icon icon="solar:user-cross-bold-duotone" style="font-size:2.5rem;color:#ef4444;margin-bottom:1rem;display:block;"></iconify-icon>
                             <h3 class="text-xl font-semibold text-white mb-2">Clientes desengajados</h3>
-                            <p class="text-sm text-muted leading-relaxed">Ninguem quer baixar mais um app. Planilhas sao abandonadas na primeira semana.</p>
+                            <p class="text-sm text-muted leading-relaxed">Ninguem quer baixar mais um app. Planilhas são abandonadas na primeira semana.</p>
                         </div>
                     </div>
                 </div>
@@ -556,8 +609,8 @@
             <div class="px-8 md:px-12 lg:px-20">
                 <div class="section-header reveal">02 // Como Funciona</div>
                 <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-white reveal delay-100">
-                    <span class="text-reveal-wrapper"><span class="text-reveal-content">Tres passos.</span></span><br/>
-                    <span class="text-reveal-wrapper"><span class="text-reveal-content delay-100 text-transparent bg-clip-text bg-gradient-to-r from-accent to-accentBright">Zero complicacao.</span></span>
+                    <span class="text-reveal-wrapper"><span class="text-reveal-content">Três passos.</span></span><br/>
+                    <span class="text-reveal-wrapper"><span class="text-reveal-content delay-100 text-transparent bg-clip-text bg-gradient-to-r from-accent to-accentBright">Zero complicação.</span></span>
                 </h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
@@ -569,7 +622,7 @@
                                 <iconify-icon icon="mdi:whatsapp" style="font-size:1.5rem;color:var(--whatsapp);"></iconify-icon>
                             </div>
                             <h3 class="text-xl font-semibold text-white mb-2">Cliente manda no WhatsApp</h3>
-                            <p class="text-sm text-muted leading-relaxed">Audio, foto do comprovante ou texto simples. O cliente usa o que ja conhece, sem fricao.</p>
+                            <p class="text-sm text-muted leading-relaxed">Audio, foto do comprovante ou texto simples. O cliente usa o que já conhece, sem fricção.</p>
                         </div>
                     </div>
                     <!-- Step 2 -->
@@ -580,7 +633,7 @@
                                 <iconify-icon icon="solar:magic-stick-3-bold-duotone" style="font-size:1.5rem;color:var(--primary);"></iconify-icon>
                             </div>
                             <h3 class="text-xl font-semibold text-white mb-2">IA categoriza automaticamente</h3>
-                            <p class="text-sm text-muted leading-relaxed">Inteligencia artificial identifica o tipo de gasto, valor e categoria. Sem intervencao manual.</p>
+                            <p class="text-sm text-muted leading-relaxed">Inteligência artificial identifica o tipo de gasto, valor e categoria. Sem intervenção manual.</p>
                         </div>
                     </div>
                     <!-- Step 3 -->
@@ -591,7 +644,7 @@
                                 <iconify-icon icon="solar:chart-square-bold-duotone" style="font-size:1.5rem;color:var(--primary);"></iconify-icon>
                             </div>
                             <h3 class="text-xl font-semibold text-white mb-2">Dashboard atualiza em tempo real</h3>
-                            <p class="text-sm text-muted leading-relaxed">Voce e seu cliente acompanham tudo no painel web ou app. Exportacao para Excel com um clique.</p>
+                            <p class="text-sm text-muted leading-relaxed">Você e seu cliente acompanham tudo no painel web ou app. Exportação para Excel com um clique.</p>
                         </div>
                     </div>
                 </div>
@@ -601,7 +654,7 @@
         <!-- ═══════════ BENEFITS ═══════════ -->
         <section id="beneficios" class="relative z-10 pt-20 pb-24">
             <div class="px-8 md:px-12 lg:px-20">
-                <div class="section-header reveal">03 // Beneficios</div>
+                <div class="section-header reveal">03 // Benefícios</div>
                 <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-white reveal delay-100">
                     <span class="text-reveal-wrapper"><span class="text-reveal-content">Por que contadores</span></span><br/>
                     <span class="text-reveal-wrapper"><span class="text-reveal-content delay-100 text-transparent bg-clip-text bg-gradient-to-r from-accent to-accentBright">escolhem o Meu Financeiro?</span></span>
@@ -613,8 +666,8 @@
                             <div class="w-10 h-10 rounded-lg bg-accent\/10 flex items-center justify-center mb-4">
                                 <iconify-icon icon="mdi:whatsapp" style="font-size:1.25rem;color:var(--whatsapp);"></iconify-icon>
                             </div>
-                            <h3 class="text-lg font-semibold text-white mb-2">Integracao WhatsApp</h3>
-                            <p class="text-sm text-muted leading-relaxed">Seus clientes ja usam WhatsApp todos os dias. Sem novo app, sem treinamento.</p>
+                            <h3 class="text-lg font-semibold text-white mb-2">Integração WhatsApp</h3>
+                            <p class="text-sm text-muted leading-relaxed">Seus clientes já usam WhatsApp todos os dias. Sem novo app, sem treinamento.</p>
                         </div>
                     </div>
                     <div class="flashlight-card p-8 reveal delay-200 group" onmousemove="const r=this.getBoundingClientRect();this.style.setProperty('--mouse-x',`${event.clientX-r.left}px`);this.style.setProperty('--mouse-y',`${event.clientY-r.top}px`);">
@@ -623,7 +676,7 @@
                                 <iconify-icon icon="solar:magic-stick-3-bold-duotone" style="font-size:1.25rem;color:var(--primary);"></iconify-icon>
                             </div>
                             <h3 class="text-lg font-semibold text-white mb-2">IA que categoriza</h3>
-                            <p class="text-sm text-muted leading-relaxed">Categorias automaticas com aprendizado continuo. Aceita audio, foto e texto.</p>
+                            <p class="text-sm text-muted leading-relaxed">Categorias automáticas com aprendizado contínuo. Aceita áudio, foto e texto.</p>
                         </div>
                     </div>
                     <div class="flashlight-card p-8 reveal delay-300 group" onmousemove="const r=this.getBoundingClientRect();this.style.setProperty('--mouse-x',`${event.clientX-r.left}px`);this.style.setProperty('--mouse-y',`${event.clientY-r.top}px`);">
@@ -632,7 +685,7 @@
                                 <iconify-icon icon="solar:dollar-minimalistic-bold-duotone" style="font-size:1.25rem;color:#34d399;"></iconify-icon>
                             </div>
                             <h3 class="text-lg font-semibold text-white mb-2">Receita recorrente</h3>
-                            <p class="text-sm text-muted leading-relaxed">Revenda por ~R$80/mes por cliente. Nova fonte de receita previsivel para seu escritorio.</p>
+                            <p class="text-sm text-muted leading-relaxed">Revenda por ~R$80/mês por cliente. Nova fonte de receita previsível para seu escritório.</p>
                         </div>
                     </div>
                     <div class="flashlight-card p-8 reveal delay-400 group" onmousemove="const r=this.getBoundingClientRect();this.style.setProperty('--mouse-x',`${event.clientX-r.left}px`);this.style.setProperty('--mouse-y',`${event.clientY-r.top}px`);">
@@ -641,7 +694,7 @@
                                 <iconify-icon icon="solar:hand-heart-bold-duotone" style="font-size:1.25rem;color:var(--primary);"></iconify-icon>
                             </div>
                             <h3 class="text-lg font-semibold text-white mb-2">Zero complexidade</h3>
-                            <p class="text-sm text-muted leading-relaxed">Seu cliente nao precisa aprender nada. Se sabe mandar mensagem, sabe usar.</p>
+                            <p class="text-sm text-muted leading-relaxed">Seu cliente não precisa aprender nada. Se sabe mandar mensagem, sabe usar.</p>
                         </div>
                     </div>
                     <div class="flashlight-card p-8 reveal delay-500 group" onmousemove="const r=this.getBoundingClientRect();this.style.setProperty('--mouse-x',`${event.clientX-r.left}px`);this.style.setProperty('--mouse-y',`${event.clientY-r.top}px`);">
@@ -649,8 +702,8 @@
                             <div class="w-10 h-10 rounded-lg bg-accent\/10 flex items-center justify-center mb-4">
                                 <iconify-icon icon="solar:file-download-bold-duotone" style="font-size:1.25rem;color:var(--primary);"></iconify-icon>
                             </div>
-                            <h3 class="text-lg font-semibold text-white mb-2">Exportacao Excel</h3>
-                            <p class="text-sm text-muted leading-relaxed">Exporte todos os dados para Excel a qualquer momento. Integracao facil com seu fluxo.</p>
+                            <h3 class="text-lg font-semibold text-white mb-2">Exportação Excel</h3>
+                            <p class="text-sm text-muted leading-relaxed">Exporte todos os dados para Excel a qualquer momento. Integração fácil com seu fluxo.</p>
                         </div>
                     </div>
                     <div class="flashlight-card p-8 reveal delay-600 group" onmousemove="const r=this.getBoundingClientRect();this.style.setProperty('--mouse-x',`${event.clientX-r.left}px`);this.style.setProperty('--mouse-y',`${event.clientY-r.top}px`);">
@@ -659,7 +712,7 @@
                                 <iconify-icon icon="solar:devices-bold-duotone" style="font-size:1.25rem;color:var(--primary);"></iconify-icon>
                             </div>
                             <h3 class="text-lg font-semibold text-white mb-2">Multiplataforma</h3>
-                            <p class="text-sm text-muted leading-relaxed">Web dashboard, app iOS (disponivel) e Android (beta). Dark e light mode.</p>
+                            <p class="text-sm text-muted leading-relaxed">Web dashboard, app iOS (disponível) e Android (beta). Dark e light mode.</p>
                         </div>
                     </div>
                 </div>
@@ -671,29 +724,29 @@
             <div class="px-8 md:px-12 lg:px-20">
                 <div class="section-header reveal">04 // Funcionalidades</div>
                 <h2 class="text-4xl md:text-5xl font-bold tracking-tighter text-white reveal delay-100 mb-12">
-                    <span class="text-reveal-wrapper"><span class="text-reveal-content">Tudo que voce</span></span><br/>
+                    <span class="text-reveal-wrapper"><span class="text-reveal-content">Tudo que você</span></span><br/>
                     <span class="text-reveal-wrapper"><span class="text-reveal-content delay-100 text-transparent bg-clip-text bg-gradient-to-r from-accent to-accentBright">precisa.</span></span>
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div class="glass-card rounded-xl p-6 reveal delay-100 text-center">
                         <iconify-icon icon="solar:microphone-3-bold-duotone" style="font-size:2rem;color:var(--primary);margin-bottom:0.75rem;display:block;"></iconify-icon>
-                        <div class="text-sm font-semibold text-white">Audio para texto</div>
+                        <div class="text-sm font-semibold text-white">Áudio para texto</div>
                         <div class="text-xs text-muted mt-1">Transcreve e registra</div>
                     </div>
                     <div class="glass-card rounded-xl p-6 reveal delay-200 text-center">
                         <iconify-icon icon="solar:camera-bold-duotone" style="font-size:2rem;color:var(--primary);margin-bottom:0.75rem;display:block;"></iconify-icon>
                         <div class="text-sm font-semibold text-white">OCR de comprovantes</div>
-                        <div class="text-xs text-muted mt-1">Foto vira lancamento</div>
+                        <div class="text-xs text-muted mt-1">Foto vira lançamento</div>
                     </div>
                     <div class="glass-card rounded-xl p-6 reveal delay-300 text-center">
                         <iconify-icon icon="solar:tag-bold-duotone" style="font-size:2rem;color:var(--primary);margin-bottom:0.75rem;display:block;"></iconify-icon>
-                        <div class="text-sm font-semibold text-white">Categorias customizaveis</div>
+                        <div class="text-sm font-semibold text-white">Categorias customizáveis</div>
                         <div class="text-xs text-muted mt-1">Adapte ao seu cliente</div>
                     </div>
                     <div class="glass-card rounded-xl p-6 reveal delay-400 text-center">
                         <iconify-icon icon="solar:chart-2-bold-duotone" style="font-size:2rem;color:var(--primary);margin-bottom:0.75rem;display:block;"></iconify-icon>
                         <div class="text-sm font-semibold text-white">Dashboard completo</div>
-                        <div class="text-xs text-muted mt-1">Graficos e relatorios</div>
+                        <div class="text-xs text-muted mt-1">Gráficos e relatórios</div>
                     </div>
                     <div class="glass-card rounded-xl p-6 reveal delay-200 text-center">
                         <iconify-icon icon="solar:moon-bold-duotone" style="font-size:2rem;color:var(--primary);margin-bottom:0.75rem;display:block;"></iconify-icon>
@@ -708,7 +761,7 @@
                     <div class="glass-card rounded-xl p-6 reveal delay-400 text-center">
                         <iconify-icon icon="solar:lock-bold-duotone" style="font-size:2rem;color:var(--primary);margin-bottom:0.75rem;display:block;"></iconify-icon>
                         <div class="text-sm font-semibold text-white">Dados criptografados</div>
-                        <div class="text-xs text-muted mt-1">Seguranca total</div>
+                        <div class="text-xs text-muted mt-1">Segurança total</div>
                     </div>
                     <div class="glass-card rounded-xl p-6 reveal delay-500 text-center">
                         <iconify-icon icon="solar:bell-bold-duotone" style="font-size:2rem;color:var(--primary);margin-bottom:0.75rem;display:block;"></iconify-icon>
@@ -727,22 +780,22 @@
                     <span class="text-reveal-wrapper"><span class="text-reveal-content">Seja um parceiro</span></span><br/>
                     <span class="text-reveal-wrapper"><span class="text-reveal-content delay-100 text-transparent bg-clip-text bg-gradient-to-r from-accent to-accentBright">Meu Financeiro.</span></span>
                 </h2>
-                <p class="mt-6 text-muted text-lg max-w-2xl mx-auto reveal delay-200">Ofereca gestao financeira inteligente para seus clientes e gere uma nova fonte de receita recorrente.</p>
+                <p class="mt-6 text-muted text-lg max-w-2xl mx-auto reveal delay-200">Ofereça gestão financeira inteligente para seus clientes e gere uma nova fonte de receita recorrente.</p>
 
                 <div class="glass-card rounded-2xl p-10 max-w-lg mx-auto mt-12 reveal delay-300">
                     <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--primary),var(--primary-light));display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;">
                         <iconify-icon icon="solar:hand-shake-bold" style="font-size:28px;color:#fff;"></iconify-icon>
                     </div>
                     <h3 class="text-2xl font-bold text-white mb-2">Programa de Parceiros</h3>
-                    <p class="text-sm text-muted mb-8">Para contadores que querem ir alem</p>
+                    <p class="text-sm text-muted mb-8">Para contadores que querem ir além</p>
                     <div class="space-y-4" style="text-align:left;">
                         <div class="flex items-center gap-3 text-sm text-muted">
                             <iconify-icon icon="solar:check-circle-bold-duotone" style="font-size:20px;color:var(--primary);flex-shrink:0;"></iconify-icon>
-                            <span>Revenda por ~R$80/mes por cliente</span>
+                            <span>Revenda por ~R$80/mês por cliente</span>
                         </div>
                         <div class="flex items-center gap-3 text-sm text-muted">
                             <iconify-icon icon="solar:check-circle-bold-duotone" style="font-size:20px;color:var(--primary);flex-shrink:0;"></iconify-icon>
-                            <span>Painel exclusivo do contador com visao de todos os clientes</span>
+                            <span>Painel exclusivo do contador com visão de todos os clientes</span>
                         </div>
                         <div class="flex items-center gap-3 text-sm text-muted">
                             <iconify-icon icon="solar:check-circle-bold-duotone" style="font-size:20px;color:var(--primary);flex-shrink:0;"></iconify-icon>
@@ -754,9 +807,13 @@
                         </div>
                         <div class="flex items-center gap-3 text-sm text-muted">
                             <iconify-icon icon="solar:check-circle-bold-duotone" style="font-size:20px;color:var(--primary);flex-shrink:0;"></iconify-icon>
-                            <span>Marca branca disponivel (seu logo no app)</span>
+                            <span>Marca branca disponível (seu logo no app)</span>
                         </div>
                     </div>
+                    <button type="button" onclick="document.getElementById('waModal').classList.add('open')" style="width:100%;margin-top:2rem;padding:0.875rem;border-radius:9999px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;font-weight:600;font-size:0.875rem;cursor:pointer;border:none;transition:opacity 0.3s,transform 0.3s;letter-spacing:0.05em;display:flex;align-items:center;justify-content:center;gap:0.5rem;" onmouseover="this.style.opacity='0.9';this.style.transform='scale(1.02)'" onmouseout="this.style.opacity='1';this.style.transform='scale(1)'">
+                        <iconify-icon icon="mdi:whatsapp" style="font-size:18px;"></iconify-icon>
+                        Fale com nosso time
+                    </button>
                 </div>
             </div>
         </section>
@@ -766,7 +823,7 @@
             <div class="px-8 md:px-12 lg:px-20">
                 <div class="section-header reveal">06 // Depoimentos</div>
                 <h2 class="text-4xl md:text-5xl font-bold tracking-tighter text-white reveal delay-100 mb-12">
-                    <span class="text-reveal-wrapper"><span class="text-reveal-content">Quem ja usa,</span></span><br/>
+                    <span class="text-reveal-wrapper"><span class="text-reveal-content">Quem já usa,</span></span><br/>
                     <span class="text-reveal-wrapper"><span class="text-reveal-content delay-100 text-transparent bg-clip-text bg-gradient-to-r from-accent to-accentBright">recomenda.</span></span>
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -778,10 +835,10 @@
                             <iconify-icon icon="solar:star-bold" style="color:#f59e0b;font-size:16px;"></iconify-icon>
                             <iconify-icon icon="solar:star-bold" style="color:#f59e0b;font-size:16px;"></iconify-icon>
                         </div>
-                        <p class="text-sm text-muted leading-relaxed mb-6">"Meus clientes MEI finalmente controlam as financas. Eles mandam audio no WhatsApp e pronto. Reduzi 80% do retrabalho."</p>
+                        <p class="text-sm text-muted leading-relaxed mb-6">"Fotografei um cupom fiscal e ele entrou show de bola, com todas as informações — até os impostos ele puxou automaticamente."</p>
                         <div class="flex items-center gap-3">
-                            <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#60a5fa);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;">RC</div>
-                            <div><div class="text-sm font-semibold text-white">Renata Costa</div><div class="text-xs text-muted">Contadora - SP</div></div>
+                            <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#60a5fa);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;">M</div>
+                            <div><div class="text-sm font-semibold text-white">Marcelo</div><div class="text-xs text-muted">Contador parceiro</div></div>
                         </div>
                     </div>
                     <div class="glass-card rounded-2xl p-8 reveal delay-300">
@@ -792,10 +849,10 @@
                             <iconify-icon icon="solar:star-bold" style="color:#f59e0b;font-size:16px;"></iconify-icon>
                             <iconify-icon icon="solar:star-bold" style="color:#f59e0b;font-size:16px;"></iconify-icon>
                         </div>
-                        <p class="text-sm text-muted leading-relaxed mb-6">"A receita recorrente com o Meu Financeiro ja representa 15% do meu faturamento. E meus clientes adoram a praticidade."</p>
+                        <p class="text-sm text-muted leading-relaxed mb-6">"No domingo eu já precisava de uma ferramenta assim. Na segunda vocês chegaram com isso. Achei fantástico — já sugeri exportar pra Excel e no mesmo dia liberaram a atualização."</p>
                         <div class="flex items-center gap-3">
-                            <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#34d399,#10b981);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;">MS</div>
-                            <div><div class="text-sm font-semibold text-white">Marcos Silva</div><div class="text-xs text-muted">Escritorio MS Contabil - MG</div></div>
+                            <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#34d399,#10b981);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;">MA</div>
+                            <div><div class="text-sm font-semibold text-white">Manuela</div><div class="text-xs text-muted">Contadora parceira</div></div>
                         </div>
                     </div>
                     <div class="glass-card rounded-2xl p-8 reveal delay-400">
@@ -806,10 +863,10 @@
                             <iconify-icon icon="solar:star-bold" style="color:#f59e0b;font-size:16px;"></iconify-icon>
                             <iconify-icon icon="solar:star-bold" style="color:#f59e0b;font-size:16px;"></iconify-icon>
                         </div>
-                        <p class="text-sm text-muted leading-relaxed mb-6">"O onboarding foi super rapido. Em uma semana ja tinha 30 clientes usando. A IA acerta a categoria em 95% das vezes."</p>
+                        <p class="text-sm text-muted leading-relaxed mb-6">"Mandei o link para 40 clientes no grupo e 3 responderam na hora querendo usar. A venda é simples — o cliente já usa WhatsApp todo dia."</p>
                         <div class="flex items-center gap-3">
-                            <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#d97706);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;">AL</div>
-                            <div><div class="text-sm font-semibold text-white">Ana Lucia</div><div class="text-xs text-muted">Contadora - RJ</div></div>
+                            <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#d97706);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;">CP</div>
+                            <div><div class="text-sm font-semibold text-white">Contador parceiro</div><div class="text-xs text-muted">Rede CF Franquias</div></div>
                         </div>
                     </div>
                 </div>
@@ -827,45 +884,52 @@
                 <div class="max-w-3xl mx-auto space-y-4">
                     <div class="faq-item reveal delay-100">
                         <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
-                            <span class="text-white font-semibold">Como meu cliente comeca a usar?</span>
+                            <span class="text-white font-semibold">Como cadastro meu cliente na plataforma?</span>
                             <iconify-icon class="faq-chevron" icon="solar:alt-arrow-down-linear" style="font-size:20px;"></iconify-icon>
                         </div>
-                        <div class="faq-answer"><p class="text-sm text-muted leading-relaxed">Basta salvar o numero do Meu Financeiro no WhatsApp e enviar a primeira mensagem. A IA guia o cliente pelo processo de configuracao em menos de 2 minutos.</p></div>
+                        <div class="faq-answer"><p class="text-sm text-muted leading-relaxed">Pelo site, você acessa a opção de cadastro, coloca o nome, e-mail, telefone e senha do cliente. Depois é só passar o número do WhatsApp do Meu Financeiro para ele começar a usar. O telefone cadastrado precisa ser o mesmo do WhatsApp.</p></div>
                     </div>
                     <div class="faq-item reveal delay-200">
                         <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
-                            <span class="text-white font-semibold">A IA realmente entende audios?</span>
+                            <span class="text-white font-semibold">A IA reconhece fotos de cupons fiscais?</span>
                             <iconify-icon class="faq-chevron" icon="solar:alt-arrow-down-linear" style="font-size:20px;"></iconify-icon>
                         </div>
-                        <div class="faq-answer"><p class="text-sm text-muted leading-relaxed">Sim! Usamos tecnologia de ponta em reconhecimento de voz. A IA transcreve o audio, identifica valores, estabelecimento e categoria automaticamente.</p></div>
+                        <div class="faq-answer"><p class="text-sm text-muted leading-relaxed">Sim! Basta tirar uma foto do cupom e enviar pelo WhatsApp. A IA extrai automaticamente os valores, o estabelecimento, a categoria e até os impostos do documento.</p></div>
                     </div>
                     <div class="faq-item reveal delay-300">
                         <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
                             <span class="text-white font-semibold">Quanto posso cobrar dos meus clientes?</span>
                             <iconify-icon class="faq-chevron" icon="solar:alt-arrow-down-linear" style="font-size:20px;"></iconify-icon>
                         </div>
-                        <div class="faq-answer"><p class="text-sm text-muted leading-relaxed">O valor sugerido e de R$80/mes por cliente, mas voce tem liberdade para definir sua precificacao. Muitos contadores incluem como parte do pacote de servicos.</p></div>
+                        <div class="faq-answer"><p class="text-sm text-muted leading-relaxed">Você tem liberdade total na precificação. O valor sugerido é em torno de R$80/mês por cliente. O processo financeiro fica a cargo do contador — pode ser boleto, Pix ou cartão. Pagou, liberou.</p></div>
                     </div>
                     <div class="faq-item reveal delay-400">
                         <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
-                            <span class="text-white font-semibold">Os dados sao seguros?</span>
+                            <span class="text-white font-semibold">Posso personalizar as categorias de cada cliente?</span>
                             <iconify-icon class="faq-chevron" icon="solar:alt-arrow-down-linear" style="font-size:20px;"></iconify-icon>
                         </div>
-                        <div class="faq-answer"><p class="text-sm text-muted leading-relaxed">Todos os dados sao criptografados em transito e em repouso. Seguimos as melhores praticas de seguranca e estamos em conformidade com a LGPD.</p></div>
+                        <div class="faq-answer"><p class="text-sm text-muted leading-relaxed">Sim! Existem categorias globais que são iguais para todos e você pode criar categorias personalizadas para cada cliente. As categorias criadas por você podem ser editadas e excluídas a qualquer momento.</p></div>
                     </div>
                     <div class="faq-item reveal delay-500">
                         <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
-                            <span class="text-white font-semibold">Posso customizar as categorias?</span>
+                            <span class="text-white font-semibold">Funciona em Android e iPhone?</span>
                             <iconify-icon class="faq-chevron" icon="solar:alt-arrow-down-linear" style="font-size:20px;"></iconify-icon>
                         </div>
-                        <div class="faq-answer"><p class="text-sm text-muted leading-relaxed">Sim! Voce pode criar categorias personalizadas para cada cliente. A IA aprende com o uso e fica cada vez mais precisa.</p></div>
+                        <div class="faq-answer"><p class="text-sm text-muted leading-relaxed">Sim! O aplicativo está disponível na App Store (iPhone) e na Google Play (Android). Além disso, o sistema pode ser acessado pelo navegador do celular ou computador. E tudo fica sincronizado — WhatsApp, app e web, tudo na mesma conta.</p></div>
+                    </div>
+                    <div class="faq-item reveal delay-500">
+                        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                            <span class="text-white font-semibold">Consigo exportar os dados para Excel?</span>
+                            <iconify-icon class="faq-chevron" icon="solar:alt-arrow-down-linear" style="font-size:20px;"></iconify-icon>
+                        </div>
+                        <div class="faq-answer"><p class="text-sm text-muted leading-relaxed">Sim! Na área de transações existe um botão para exportar em Excel. Você pode usar os dados para criar dashboards, gráficos e acompanhamento financeiro dos seus clientes.</p></div>
                     </div>
                     <div class="faq-item reveal delay-600">
                         <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
                             <span class="text-white font-semibold">Tem app mobile?</span>
                             <iconify-icon class="faq-chevron" icon="solar:alt-arrow-down-linear" style="font-size:20px;"></iconify-icon>
                         </div>
-                        <div class="faq-answer"><p class="text-sm text-muted leading-relaxed">Sim! O app iOS ja esta disponivel na App Store. A versao Android esta em beta e sera lancada em breve. Alem disso, o dashboard web funciona em qualquer navegador.</p></div>
+                        <div class="faq-answer"><p class="text-sm text-muted leading-relaxed">Sim! O app iOS já está disponível na App Store. A versão Android está em beta e será lançada em breve. Além disso, o dashboard web funciona em qualquer navegador.</p></div>
                     </div>
                 </div>
             </div>
@@ -879,7 +943,7 @@
                     <span class="text-reveal-wrapper"><span class="text-reveal-content">Comece a faturar com o</span></span><br/>
                     <span class="text-reveal-wrapper"><span class="text-reveal-content delay-100 text-transparent bg-clip-text bg-gradient-to-r from-accent to-accentBright">Meu Financeiro.</span></span>
                 </h2>
-                <p class="mt-8 text-muted text-lg max-w-xl mx-auto reveal delay-200">Preencha o formulario e nossa equipe entrara em contato para ativar sua parceria.</p>
+                <p class="mt-8 text-muted text-lg max-w-xl mx-auto reveal delay-200">Preencha o formulário e nossa equipe entrará em contato para ativar sua parceria.</p>
 
                 <div class="glass-card rounded-2xl p-10 max-w-lg mx-auto mt-12 reveal delay-300">
                     <form onsubmit="event.preventDefault();this.querySelector('.form-success').style.display='block';this.querySelector('.form-fields').style.display='none';" class="space-y-4">
@@ -887,7 +951,7 @@
                             <input type="text" placeholder="Seu nome completo" required style="width:100%;padding:0.75rem 1rem;border-radius:0.5rem;background:rgba(15,31,58,0.6);border:1px solid rgba(37,99,235,0.15);color:#fff;font-size:0.875rem;outline:none;transition:border-color 0.3s;" onfocus="this.style.borderColor='rgba(37,99,235,0.5)'" onblur="this.style.borderColor='rgba(37,99,235,0.15)'" />
                             <input type="email" placeholder="Seu melhor e-mail" required style="width:100%;padding:0.75rem 1rem;border-radius:0.5rem;background:rgba(15,31,58,0.6);border:1px solid rgba(37,99,235,0.15);color:#fff;font-size:0.875rem;outline:none;transition:border-color 0.3s;" onfocus="this.style.borderColor='rgba(37,99,235,0.5)'" onblur="this.style.borderColor='rgba(37,99,235,0.15)'" />
                             <input type="tel" placeholder="WhatsApp (com DDD)" required style="width:100%;padding:0.75rem 1rem;border-radius:0.5rem;background:rgba(15,31,58,0.6);border:1px solid rgba(37,99,235,0.15);color:#fff;font-size:0.875rem;outline:none;transition:border-color 0.3s;" onfocus="this.style.borderColor='rgba(37,99,235,0.5)'" onblur="this.style.borderColor='rgba(37,99,235,0.15)'" />
-                            <input type="text" placeholder="Nome do escritorio / empresa" style="width:100%;padding:0.75rem 1rem;border-radius:0.5rem;background:rgba(15,31,58,0.6);border:1px solid rgba(37,99,235,0.15);color:#fff;font-size:0.875rem;outline:none;transition:border-color 0.3s;" onfocus="this.style.borderColor='rgba(37,99,235,0.5)'" onblur="this.style.borderColor='rgba(37,99,235,0.15)'" />
+                            <input type="text" placeholder="Nome do escritório / empresa" style="width:100%;padding:0.75rem 1rem;border-radius:0.5rem;background:rgba(15,31,58,0.6);border:1px solid rgba(37,99,235,0.15);color:#fff;font-size:0.875rem;outline:none;transition:border-color 0.3s;" onfocus="this.style.borderColor='rgba(37,99,235,0.5)'" onblur="this.style.borderColor='rgba(37,99,235,0.15)'" />
                             <button type="submit" style="width:100%;padding:0.875rem;border-radius:9999px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;font-weight:600;font-size:0.875rem;cursor:pointer;border:none;transition:opacity 0.3s,transform 0.3s;letter-spacing:0.05em;" onmouseover="this.style.opacity='0.9';this.style.transform='scale(1.02)'" onmouseout="this.style.opacity='1';this.style.transform='scale(1)'">
                                 Quero ser parceiro
                             </button>
@@ -895,7 +959,7 @@
                         <div class="form-success" style="display:none;padding:2rem 0;">
                             <iconify-icon icon="solar:check-circle-bold-duotone" style="font-size:3rem;color:var(--primary);display:block;margin:0 auto 1rem;"></iconify-icon>
                             <p class="text-white font-semibold text-lg">Recebemos seu contato!</p>
-                            <p class="text-muted text-sm mt-2">Nossa equipe entrara em contato em breve.</p>
+                            <p class="text-muted text-sm mt-2">Nossa equipe entrará em contato em breve.</p>
                         </div>
                     </form>
                 </div>
@@ -922,7 +986,7 @@
                             <div class="text-xs font-mono uppercase tracking-widest text-accent mb-3">Produto</div>
                             <div class="space-y-3">
                                 <a href="#como-funciona" class="text-sm text-muted block" style="transition:color 0.2s;">Como Funciona</a>
-                                <a href="#beneficios" class="text-sm text-muted block" style="transition:color 0.2s;">Beneficios</a>
+                                <a href="#beneficios" class="text-sm text-muted block" style="transition:color 0.2s;">Benefícios</a>
                                 <a href="#faq" class="text-sm text-muted block" style="transition:color 0.2s;">FAQ</a>
                             </div>
                         </div>
@@ -943,9 +1007,9 @@
                             <a href="#" style="width:36px;height:36px;border-radius:8px;background:rgba(37,99,235,0.1);display:flex;align-items:center;justify-content:center;transition:background 0.3s;">
                                 <iconify-icon icon="mdi:linkedin" style="font-size:18px;color:var(--muted);"></iconify-icon>
                             </a>
-                            <a href="https://wa.me/5500000000000" target="_blank" rel="noopener" style="width:36px;height:36px;border-radius:8px;background:rgba(37,211,102,0.1);display:flex;align-items:center;justify-content:center;transition:background 0.3s;">
+                            <button type="button" onclick="document.getElementById('waModal').classList.add('open')" style="width:36px;height:36px;border-radius:8px;background:rgba(37,211,102,0.1);display:flex;align-items:center;justify-content:center;transition:background 0.3s;border:none;cursor:pointer;">
                                 <iconify-icon icon="mdi:whatsapp" style="font-size:18px;color:var(--whatsapp);"></iconify-icon>
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1016,6 +1080,61 @@
                 const target = document.querySelector(a.getAttribute('href'));
                 if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
             });
+        });
+
+        // WhatsApp Lead Form → SDR-Franquia webhook
+        const waForm = document.getElementById('waLeadForm');
+        const waBtn = document.getElementById('waSubmitBtn');
+        const waSuccess = document.getElementById('waFormSuccess');
+
+        waForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            waBtn.disabled = true;
+            waBtn.innerHTML = '<iconify-icon icon="svg-spinners:ring-resize" style="font-size:18px;"></iconify-icon> Enviando...';
+
+            const data = {
+                nome: waForm.nome.value.trim(),
+                telefone: waForm.telefone.value.trim(),
+                mensagem: waForm.mensagem.value.trim(),
+                origem: 'landing-meu-financeiro',
+                pagina: window.location.href,
+                timestamp: new Date().toISOString()
+            };
+
+            let ok = false;
+            try {
+                const res = await fetch('https://n8nomega.cffranquias.com.br/webhook/3fc4a2ba-82f9-46bc-9aac-48683fbea19b', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                ok = res.ok;
+            } catch (err) {
+                console.error('Webhook error:', err);
+            }
+
+            waForm.style.display = 'none';
+            if (ok) {
+                waSuccess.style.display = 'block';
+            } else {
+                waSuccess.innerHTML = '<iconify-icon icon="solar:danger-triangle-bold-duotone" style="font-size:3rem;color:#f59e0b;display:block;margin:0 auto 0.75rem;"></iconify-icon><p style="color:#fff;font-weight:600;font-size:1rem;">Ops, algo deu errado</p><p style="color:var(--muted);font-size:0.8rem;margin-top:0.25rem;">Tente novamente em alguns instantes.</p>';
+                waSuccess.style.display = 'block';
+            }
+
+            const successHtml = '<iconify-icon icon="solar:check-circle-bold-duotone" style="font-size:3rem;color:var(--whatsapp);display:block;margin:0 auto 0.75rem;"></iconify-icon><p style="color:#fff;font-weight:600;font-size:1rem;">Mensagem enviada!</p><p style="color:var(--muted);font-size:0.8rem;margin-top:0.25rem;">Nosso agente entrará em contato pelo WhatsApp em breve.</p>';
+
+            setTimeout(() => {
+                document.getElementById('waModal').classList.remove('open');
+                setTimeout(() => {
+                    waForm.style.display = 'flex';
+                    waSuccess.style.display = 'none';
+                    waSuccess.innerHTML = successHtml;
+                    waForm.reset();
+                    waForm.mensagem.value = 'Quero conhecer mais sobre o Meu Financeiro';
+                    waBtn.disabled = false;
+                    waBtn.innerHTML = '<iconify-icon icon="mdi:whatsapp" style="font-size:18px;"></iconify-icon> Enviar mensagem';
+                }, 300);
+            }, 3000);
         });
     });
     </script>
